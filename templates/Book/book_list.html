@@ -1,0 +1,44 @@
+{% extends "Book/base.html" %}
+
+
+{% block content %}
+<table class="table table-borderless">
+    <thead class="border-bottom font-weight-bold">
+        <tr>
+            <td>Book Name</td>
+            <td>Author Name</td>
+            <td>Publication</td>
+            <td>Update</td>
+            <td>Delete</td>
+            <td>
+                <a href="{% url 'book_entry' %}" class="btn btn-outline-success">
+                    <i class="fas fa-plus"></i> Add Book
+                </a>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in book_list %}
+            <tr>
+                <td>{{book.book_name}}</td>
+                <td>{{book.author_name}}</td>
+                <td>{{book.publication}}</td>
+                <td>
+                    <a href="{% url 'book_update' book.id %}" class="btn btn-outline-info  btn-sm btn-block">
+                        <i class="far fa-edit fa-lg"></i>
+                    </a>
+                </td>
+                <td>
+                    <form action="{% url 'book_delete' book.id %}" method="post" class="btn btn-outline-danger  btn-sm btn-block">
+                        {% csrf_token %}
+                        <button type="submit" class="btn">
+                            <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}
